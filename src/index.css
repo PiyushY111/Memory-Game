@@ -1,0 +1,172 @@
+/*-------------------- RESET --------------------*/
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+  background-color: #171717;
+}
+
+#root {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 70px 1fr 50px;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+}
+
+a {
+  text-decoration: none;
+}
+
+/*-------------------- LAYOUT --------------------*/
+header,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #212121;
+}
+
+header {
+  grid-area: header;
+}
+
+header a {
+  display: flex;
+}
+
+footer {
+  grid-area: footer;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  height: calc(100vh - 180px);
+  background-color: #171717;
+}
+
+/*-------------------- UTILITY --------------------*/
+.d-flex {
+  display: flex;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 10px;
+}
+
+/*-------------------- BUTTON --------------------*/
+button {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button img {
+  width: 18px;
+  height: 18px;
+}
+
+.primary-btn img {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 6px 20px;
+  background: #003158;
+  color: #ffcc00;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*-------------------- TABLE --------------------*/
+table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin: 0 auto;
+  border: 1px solid #333;
+}
+
+thead {
+  background-color: #1e1e1e;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  background: #252525;
+  color: #f0f0f0;
+}
+
+th,
+td img {
+  width: 18px;
+  height: 18px;
+}
+
+th:first-child,
+td:first-child {
+  width: 10%;
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  width: 22.5%;
+}
+
+.table tr:nth-child(even) {
+  background: #1f1f1f;
+}
+
+.table tr:hover {
+  background: #2b2b2b;
+}
+
+/*---------------------- RESPONSIVE BREAKPOINTS ---------------------- */
+@media (max-width: 585px) {
+  main {
+    padding: 10px;
+    height: calc(100vh - 140px);
+  }
+}
