@@ -1,50 +1,96 @@
-import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import './Header.css';
+"use client"
 
-function Header({ onLoginClick }) {
-  const { currentUser, logout } = useAuth();
-  const [error, setError] = useState('');
+import { useState } from "react"
+import { useAuth } from "../contexts/AuthContext"
+import { Link } from "react-router-dom"
+import { LogOut, Menu, X } from "lucide-react"
+import "./Header.css"
+
+export default function Header({ onLoginClick }) {
+  const { currentUser, logout } = useAuth()
+  const [error, setError] = useState("")
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleLogout = async () => {
-    setError('');
+    setError("")
     try {
-      await logout();
+      await logout()
     } catch (err) {
-      setError(err.message);
+      setError(err.message)
     }
-  };
+  }
 
   const handleLoginButtonClick = () => {
-    console.log('Login button clicked');
-    if (onLoginClick) {
-      onLoginClick();
-    }
-  };
+    if (onLoginClick) onLoginClick()
+  }
 
-  const displayName = currentUser?.displayName || currentUser?.email || 'User';
+  const displayName = currentUser?.displayName || currentUser?.email || "User"
 
   return (
-    <header>
+    <header className="header">
       <div className="header-container">
-        <a href="/" aria-label="Go to home">
-          <img src="/logo.svg" width={288} height={60} alt="MatchUp logo" className="logo" />
-        </a>
-        <div>
-          {currentUser ? (
-            <>
-              <span style={{ marginRight: '0.5rem' }}>Welcome,</span>
-              <span>{displayName}</span>
-              <button className="auth-button" onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <button className="auth-button" onClick={handleLoginButtonClick}>Login / Signup</button>
+        {/* Left: Logo */}
+        <div className="left-slot">
+          <Link to="/" aria-label="Go to home" className="logo-container">
+            <img src="/logo.svg" alt="MatchUp logo" className="logo" />
+          </Link>
+        </div>
+
+        {/* Center: Welcome */}
+        <div className="center-slot">
+          {currentUser && (
+            <div className="user-info">
+              <span className="welcome-text">Welcome, </span>
+              <span className="user-name">{displayName}</span>
+            </div>
           )}
         </div>
-      </div>
-      {error && <div style={{ color: 'red', marginTop: '0.5rem' }}>{error}</div>}
-    </header>
-  );
-}
 
-export default Header;
+        {/* Right: Logout/Login */}
+        <div className="right-slot">
+          {currentUser ? (
+            <button onClick={handleLogout} className="logout-button">
+              <LogOut className="logout-icon" />
+              Logout
+            </button>
+          ) : (
+            <button onClick={handleLoginButtonClick} className="login-button">
+              Login / Signup
+            </button>
+          )}
+
+          <div className="mobile-menu-button">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="menu-toggle"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="menu-icon" /> : <Menu className="menu-icon" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          {currentUser ? (
+            <div className="mobile-user-info">
+              <div className="welcome-text">Welcome, {displayName}</div>
+              <button onClick={handleLogout} className="mobile-logout-button">
+                <LogOut className="logout-icon" />
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button onClick={handleLoginButtonClick} className="mobile-login-button">
+              Login / Signup
+            </button>
+          )}
+        </div>
+      )}
+
+      {error && <div className="error-message">{error}</div>}
+    </header>
+  )
+}

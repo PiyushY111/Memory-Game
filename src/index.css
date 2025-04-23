@@ -33,7 +33,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #212121;
+
 }
 
 header {
@@ -55,8 +55,7 @@ main {
   align-items: center;
   flex-direction: column;
   padding: 30px;
-  height: calc(100vh - 180px);
-  background-color: #171717;
+  height: calc(100vh - 120px);
 }
 
 /*-------------------- UTILITY --------------------*/
