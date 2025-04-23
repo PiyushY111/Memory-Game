@@ -116,8 +116,11 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900 p-4">
+    <div id="Globe-venta" className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900 p-4">
       <div className="w-full max-w-md">
+      
+      
+
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight text-white">Welcome to MatchUp Game</h1>
           <p className="mt-2 text-slate-400">Sign in to your account or create a new one</p>

@@ -27,46 +27,48 @@ export default function Header({ onLoginClick }) {
   const displayName = currentUser?.displayName || currentUser?.email || "User"
 
   return (
-    <header className="header">
-      <div className="header-container">
+    <header className="header !h-[5rem]">
+      <div className="/header-container flex md:flex-row flex-col h-[5rem] w-full mdp-[1rem]">
         {/* Left: Logo */}
-        <div className="left-slot">
+        <div className="left-slot flex justify-center items-center md:w-fit w-full ">
           <Link to="/" aria-label="Go to home" className="logo-container">
             <img src="/logo.svg" alt="MatchUp logo" className="logo" />
           </Link>
         </div>
 
         {/* Center: Welcome */}
-        <div className="center-slot">
-          {currentUser && (
-            <div className="user-info">
-              <span className="welcome-text">Welcome, </span>
-              <span className="user-name">{displayName}</span>
+        <div className="flex justify-between  items-center md:w-full md:pl-[30%] w-full  h-full md:p-0 p-[1rem]">
+          <div className="center-slot">
+            {currentUser && (
+              <div className="user-info">
+                <span className="welcome-text">Welcome, </span>
+                <span className="user-name">{displayName}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Right: Logout/Login */}
+          <div className="right-slot">
+            {currentUser ? (
+              <button onClick={handleLogout} className="logout-button">
+                <LogOut className="logout-icon" />
+                Logout
+              </button>
+            ) : (
+              <button onClick={handleLoginButtonClick} className="login-button">
+                Login / Signup
+              </button>
+            )}
+
+            <div className="mobile-menu-button">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="menu-toggle"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="menu-icon" /> : <Menu className="menu-icon" />}
+              </button>
             </div>
-          )}
-        </div>
-
-        {/* Right: Logout/Login */}
-        <div className="right-slot">
-          {currentUser ? (
-            <button onClick={handleLogout} className="logout-button">
-              <LogOut className="logout-icon" />
-              Logout
-            </button>
-          ) : (
-            <button onClick={handleLoginButtonClick} className="login-button">
-              Login / Signup
-            </button>
-          )}
-
-          <div className="mobile-menu-button">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="menu-toggle"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="menu-icon" /> : <Menu className="menu-icon" />}
-            </button>
           </div>
         </div>
       </div>
