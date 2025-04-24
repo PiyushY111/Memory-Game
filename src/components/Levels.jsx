@@ -21,7 +21,7 @@ function Levels({ handleLevelClick }) {
   return (
     <div className="levels-container">
       <h2 className="levels-heading">Choose Your Challenge</h2>
-      
+
       {/* Desktop scroll controls - only visible on desktop */}
       <div className="level-scroll-controls">
         <button className="scroll-button scroll-left" onClick={scrollLeft} aria-label="Scroll left">
@@ -31,13 +31,13 @@ function Levels({ handleLevelClick }) {
           <ChevronRight />
         </button>
       </div>
-      
+
       {/* Horizontally scrollable container on desktop */}
       <div className="level-cards-outer-container">
         <div className="level-cards-container" ref={scrollContainerRef}>
           {gameLevels.map((level, index) => (
-            <div 
-              key={level.grid} 
+            <div
+              key={level.grid}
               className={`level-card ${hoveredLevel === index ? 'level-card-active' : ''}`}
               onClick={() => handleLevelClick(level)}
               onMouseEnter={() => setHoveredLevel(index)}
@@ -50,16 +50,16 @@ function Levels({ handleLevelClick }) {
                     <ArrowRight className="level-card-arrow" />
                   </span>
                 </div>
-                
+
                 <div className="level-card-image-container">
-                  <img 
-                    src={level.icon} 
-                    className="level-card-icon" 
-                    alt={level.title} 
+                  <img
+                    src={level.icon}
+                    className="level-card-icon"
+                    alt={level.title}
                     loading="lazy"
                   />
                 </div>
-                
+
                 <p className="level-card-subtitle">{level.subtitle}</p>
               </div>
             </div>

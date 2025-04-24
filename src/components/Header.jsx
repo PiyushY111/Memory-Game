@@ -17,7 +17,7 @@ export default function Header({ onLoginClick }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -100,7 +100,7 @@ export default function Header({ onLoginClick }) {
               <span className="mobile-username">{displayName}</span>
             </div>
           )}
-          
+
           {currentUser ? (
             <button onClick={handleLogout} className="mobile-logout-button">
               <LogOut className="logout-icon" />
@@ -111,7 +111,7 @@ export default function Header({ onLoginClick }) {
               Login / Signup
             </button>
           )}
-          
+
           <nav className="mobile-nav">
             {/* <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
             <Link to="/matches" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Matches</Link>
@@ -122,8 +122,8 @@ export default function Header({ onLoginClick }) {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div 
-          className="mobile-overlay" 
+        <div
+          className="mobile-overlay"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}

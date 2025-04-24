@@ -77,7 +77,8 @@
 }
 
 /* Buttons */
-.logout-button, .login-button {
+.logout-button,
+.login-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,8 +186,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .mobile-user-info {
@@ -212,7 +218,8 @@
   -webkit-text-fill-color: transparent;
 }
 
-.mobile-logout-button, .mobile-login-button {
+.mobile-logout-button,
+.mobile-login-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,23 +280,23 @@
     grid-template-columns: auto 1fr auto;
     padding: 0 1rem;
   }
-  
+
   .center-slot {
     display: none;
   }
-  
+
   .desktop-actions {
     display: none;
   }
-  
+
   .menu-toggle {
     display: flex;
   }
-  
+
   .logo {
     height: 34px;
   }
-  
+
   .mobile-menu {
     display: block;
   }

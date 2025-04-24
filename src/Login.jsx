@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function AuthPage() {
 
-//   const { toast } = useToast()
-    const router = useNavigate()
+  //   const { toast } = useToast()
+  const router = useNavigate()
 
   const [activeTab, setActiveTab] = useState("login")
   const { login, signup, loginWithGoogle } = useAuth();
@@ -53,7 +53,7 @@ export default function AuthPage() {
   const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
   const mockGoogleLoginApi = async () => {
-        await loginWithGoogle();
+    await loginWithGoogle();
   }
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
@@ -62,10 +62,10 @@ export default function AuthPage() {
     try {
       const { email, password } = loginForm
       const response = await login(email, password);
-        toast.success("Login successful")
-        router("/")
+      toast.success("Login successful")
+      router("/")
     } catch (error) {
-      toast.error(error.code.includes("/")?error.code.split("/")[1]:error.code)
+      toast.error(error.code.includes("/") ? error.code.split("/")[1] : error.code)
     } finally {
       setIsLoading(false)
     }
@@ -79,20 +79,20 @@ export default function AuthPage() {
       const { email, password } = signupForm
       const response = await signup(email, password);
 
-    //   if (response.success) {
-        toast.success("Signup successful")
-        router("/")
-        // Here you would typically:
-        // 1. Store the user token in localStorage/cookies
-        // 2. Update global auth state
-        // 3. Redirect to dashboard or login
-        setActiveTab("login")
-    //   } else {
-    //     toast.error("Signup failed")
-    //   }
+      //   if (response.success) {
+      toast.success("Signup successful")
+      router("/")
+      // Here you would typically:
+      // 1. Store the user token in localStorage/cookies
+      // 2. Update global auth state
+      // 3. Redirect to dashboard or login
+      setActiveTab("login")
+      //   } else {
+      //     toast.error("Signup failed")
+      //   }
     } catch (error) {
-        // console.log(error.code)
-      toast.error(error.code.includes("/")?error.code.split("/")[1]:error.code)
+      // console.log(error.code)
+      toast.error(error.code.includes("/") ? error.code.split("/")[1] : error.code)
     } finally {
       setIsLoading(false)
     }
@@ -105,11 +105,11 @@ export default function AuthPage() {
       const response = await mockGoogleLoginApi()
 
       // if (response.success) {
-        toast.success("Google login successful")
-        router("/")
+      toast.success("Google login successful")
+      router("/")
       // }
     } catch (error) {
-      toast.error(error.code.includes("/")?error.code.split("/")[1]:error.code)
+      toast.error(error.code.includes("/") ? error.code.split("/")[1] : error.code)
     } finally {
       setIsLoading(false)
     }
@@ -118,8 +118,8 @@ export default function AuthPage() {
   return (
     <div id="Globe-venta" className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900 p-4">
       <div className="w-full max-w-md">
-      
-      
+
+
 
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight text-white">Welcome to MatchUp Game</h1>

@@ -55,23 +55,23 @@ function Win({ handleGameRestart, handleLevelChange, stats }) {
           <tbody>
             {topResults.length
               ? topResults.map((row, index) => (
-                  <tr key={row.startedAt}>
-                    <td>
-                      <div className="d-flex gap-10 align-items-center justify-content-center">
-                        <img
-                          src={`/ranking-icons/${index + 1}-place.svg`}
-                          width={18}
-                          height={18}
-                          alt={`${index + 1} place icon`}
-                        />
-                      </div>
-                    </td>
-                    <td>{row.moves}</td>
-                    <td>{row.misses}</td>
-                    <td>{calculateAccuracy(row.matchedCards, row.moves)}%</td>
-                    <td>{calculateGameDuration(row.startedAt, row.endedAt)}</td>
-                  </tr>
-                ))
+                <tr key={row.startedAt}>
+                  <td>
+                    <div className="d-flex gap-10 align-items-center justify-content-center">
+                      <img
+                        src={`/ranking-icons/${index + 1}-place.svg`}
+                        width={18}
+                        height={18}
+                        alt={`${index + 1} place icon`}
+                      />
+                    </div>
+                  </td>
+                  <td>{row.moves}</td>
+                  <td>{row.misses}</td>
+                  <td>{calculateAccuracy(row.matchedCards, row.moves)}%</td>
+                  <td>{calculateGameDuration(row.startedAt, row.endedAt)}</td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>

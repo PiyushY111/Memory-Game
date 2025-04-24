@@ -75,17 +75,21 @@
   padding: 1rem 0.5rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
 }
 
 /* Hide scrollbar */
 .level-cards-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Opera */
+  display: none;
+  /* Chrome/Safari/Opera */
 }
 
 .level-card {
-  flex: 0 0 300px; /* Fixed width for scrolling */
+  flex: 0 0 300px;
+  /* Fixed width for scrolling */
   border-radius: 16px;
   overflow: hidden;
   background-color: #1a1b2e;
@@ -106,12 +110,14 @@
   z-index: -1;
 }
 
-.level-card:hover, .level-card-active {
+.level-card:hover,
+.level-card-active {
   transform: translateY(-8px);
   box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
 }
 
-.level-card:hover:before, .level-card-active:before {
+.level-card:hover:before,
+.level-card-active:before {
   opacity: 0.1;
 }
 
@@ -193,7 +199,7 @@
   transition: transform 0.5s ease;
 }
 
-.level-card:hover ,
+.level-card:hover,
 .level-card-active {
   transform: scale(1.1);
 }
@@ -217,25 +223,26 @@
     font-size: 2rem;
     margin-bottom: 1.5rem;
   }
-  
+
   /*
   .level-scroll-controls {
     display: none;
   }
   */
-  
+
   .level-card {
-    flex: 0 0 260px; /* Slightly smaller cards on tablets */
+    flex: 0 0 260px;
+    /* Slightly smaller cards on tablets */
   }
-  
+
   .level-card-content {
     padding: 1.25rem;
   }
-  
+
   .level-card-title {
     font-size: 1.35rem;
   }
-  
+
   .level-card-image-container {
     height: 160px;
   }
@@ -246,7 +253,7 @@
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
   }
-  
+
   /* Switch to vertical layout on mobile */
   .level-cards-container {
     display: grid;
@@ -255,26 +262,27 @@
     overflow-x: visible;
     padding: 0.5rem;
   }
-  
+
   .level-card {
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
   }
-  
-  .level-card:hover, .level-card-active {
+
+  .level-card:hover,
+  .level-card-active {
     transform: translateY(-5px);
   }
-  
+
   .level-card-content {
     padding: 1rem;
   }
-  
+
   .level-card-image-container {
     height: 140px;
     margin: 0.75rem 0;
   }
-  
+
   /* Add a cool mobile tap effect */
   .level-card::after {
     content: '';
@@ -283,16 +291,14 @@
     left: -100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
     transition: none;
   }
-  
+
   .level-card:active::after {
     left: 125%;
     transition: left 0.75s ease-in-out;
@@ -326,7 +332,8 @@
   flex-wrap: nowrap;
   gap: 1.5rem;
   overflow-x: auto;
-  padding: 1rem 0.5rem 2rem; /* Added padding at bottom */
+  padding: 1rem 0.5rem 2rem;
+  /* Added padding at bottom */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -335,7 +342,9 @@
 }
 
 /* Make sure the main container has proper layout */
-body, #root, .app {
+body,
+#root,
+.app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -357,6 +366,7 @@ main {
     padding-bottom: 1rem;
   }
 }
+
 /*-------------------- GAME BOARD --------------------*/
 .game-main {
   display: flex;
@@ -503,8 +513,15 @@ main {
 }
 
 @keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
 }
 
 /* Make sure footer is visible on all screen sizes */
@@ -519,7 +536,7 @@ main {
     padding: 0.75rem 0;
     margin-top: 1rem;
   }
-  
+
   .game-footer small {
     font-size: 0.75rem;
   }
@@ -572,6 +589,7 @@ main {
   .win-container {
     padding: 10px;
   }
+
   .win-container .win-container-header .trophy-icon {
     width: 30px;
     height: 30px;
@@ -588,9 +606,11 @@ main {
   0% {
     box-shadow: none;
   }
+
   50% {
     box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.7);
   }
+
   100% {
     box-shadow: none;
   }
