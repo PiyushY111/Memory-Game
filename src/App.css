@@ -1,37 +1,362 @@
 /*-------------------- LEVELS CONTAINER --------------------*/
+.levels-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+}
 
+.levels-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #f0f0f0;
+  background: linear-gradient(90deg, #7c3aed 0%, #6d28d9 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scroll controls for desktop */
+.level-scroll-controls {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+  padding: 0 1rem;
+}
+
+.scroll-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(10, 11, 26, 0.8);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #e2e2e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-button:hover {
+  background-color: rgba(124, 58, 237, 0.2);
+  transform: scale(1.1);
+}
+
+.scroll-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.5);
+}
+
+/* Container for horizontal scrolling on desktop */
+.level-cards-outer-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Horizontal scrolling container */
 .level-cards-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0.5rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Hide scrollbar */
+.level-cards-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.level-card {
+  flex: 0 0 300px; /* Fixed width for scrolling */
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #1a1b2e;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+}
+
+.level-card:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #7c3aed 0%, #6d28d9 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.level-card:hover, .level-card-active {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
+}
+
+.level-card:hover:before, .level-card-active:before {
+  opacity: 0.1;
+}
+
+.level-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.level-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.level-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: #f0f0f0;
+  transition: color 0.3s ease;
+}
+
+.level-card:hover .level-card-title,
+.level-card-active .level-card-title {
+  color: #a78bfa;
+}
+
+.level-card-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
+}
+
+.level-card:hover .level-card-indicator,
+.level-card-active .level-card-indicator {
+  background-color: #7c3aed;
+  transform: translateX(5px);
+}
+
+.level-card-arrow {
+  width: 16px;
+  height: 16px;
+  color: #a78bfa;
+  transition: color 0.3s ease;
+}
+
+.level-card:hover .level-card-arrow,
+.level-card-active .level-card-arrow {
+  color: #ffffff;
+}
+
+.level-card-image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  height: 180px;
+  margin: 1rem 0;
+  transition: transform 0.5s ease;
+  overflow: hidden;
 }
 
-.level-cards-container .level-card {
-  cursor: pointer;
+.level-card:hover .level-card-image-container,
+.level-card-active .level-card-image-container {
+  transform: scale(1.05);
 }
 
-.level-cards-container .level-card:hover {
-  opacity: 0.8;
+.level-card-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
 }
 
-.level-cards-container .level-card-title {
-  font-size: 26px;
-  font-weight: 500;
+.level-card:hover ,
+.level-card-active {
+  transform: scale(1.1);
 }
 
-.level-cards-container .level-card-icon {
-  width: 190px;
-  height: 190px;
+.level-card-subtitle {
+  font-size: 0.95rem;
+  color: #a0a0b0;
+  margin-top: auto;
+  line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
-.level-cards-container .level-card-subtitle {
-  font-size: 16px;
-  line-height: 1;
+.level-card:hover .level-card-subtitle,
+.level-card-active .level-card-subtitle {
+  color: #ddd6fe;
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .levels-heading {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /*
+  .level-scroll-controls {
+    display: none;
+  }
+  */
+  
+  .level-card {
+    flex: 0 0 260px; /* Slightly smaller cards on tablets */
+  }
+  
+  .level-card-content {
+    padding: 1.25rem;
+  }
+  
+  .level-card-title {
+    font-size: 1.35rem;
+  }
+  
+  .level-card-image-container {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .levels-heading {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Switch to vertical layout on mobile */
+  .level-cards-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    overflow-x: visible;
+    padding: 0.5rem;
+  }
+  
+  .level-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  
+  .level-card:hover, .level-card-active {
+    transform: translateY(-5px);
+  }
+  
+  .level-card-content {
+    padding: 1rem;
+  }
+  
+  .level-card-image-container {
+    height: 140px;
+    margin: 0.75rem 0;
+  }
+  
+  /* Add a cool mobile tap effect */
+  .level-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: none;
+  }
+  
+  .level-card:active::after {
+    left: 125%;
+    transition: left 0.75s ease-in-out;
+  }
+}
+
+
+/* Add these CSS rules to your existing level-cards CSS */
+
+/* Fix for footer visibility */
+.levels-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+  /* Remove any position: fixed or overflow properties that might hide the footer */
+}
+
+/* Ensure the outer container doesn't overflow */
+.level-cards-outer-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  /* Make sure we're not using height: 100vh or similar that would push footer out */
+}
+
+/* For horizontal scrolling, ensure it doesn't affect vertical layout */
+.level-cards-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0.5rem 2rem; /* Added padding at bottom */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Don't use absolute positioning here */
+}
+
+/* Make sure the main container has proper layout */
+body, #root, .app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Make main content area take available space, but allow footer to show */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Critical fix - ensure the level container doesn't have a fixed height */
+@media (max-width: 480px) {
+  .level-cards-container {
+    /* Ensure no fixed height properties pushing footer down */
+    max-height: none;
+    height: auto;
+    padding-bottom: 1rem;
+  }
+}
 /*-------------------- GAME BOARD --------------------*/
 .game-main {
   display: flex;
@@ -145,11 +470,59 @@
 
 /*-------------------- GAME FOOTER --------------------*/
 .game-footer {
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+  background-color: #0a0b1a;
+  border-top: 1px solid rgba(31, 32, 55, 0.5);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-content {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin: 10px 0;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.game-footer small {
+  font-size: 0.875rem;
+  color: #a0a0b0;
+  line-height: 1.5;
+}
+
+.game-footer small .heart-icon {
+  color: #e25555;
+  animation: heartbeat 1.5s ease infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Make sure footer is visible on all screen sizes */
+@media (max-width: 768px) {
+  .game-footer {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-footer {
+    padding: 0.75rem 0;
+    margin-top: 1rem;
+  }
+  
+  .game-footer small {
+    font-size: 0.75rem;
+  }
 }
 
 /*-------------------- WIN CONTAINER --------------------*/
@@ -184,8 +557,8 @@
   }
 
   .level-cards-container .level-card-icon {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
   }
 
   .level-cards-container .level-card-title {
