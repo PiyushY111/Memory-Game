@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { calculateAccuracy, calculateGameDuration } from '../utils';
+import { saveScore } from '../utils/scoreUtils';
+import { useAuth } from '../contexts/AuthContext';
 import Button from './Button';
 import StatsCard from './StatsCard';
 
 function Win({ handleGameRestart, handleLevelChange, stats }) {
   const [topResults, setTopResults] = useState([]);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     let topRes = [];
@@ -24,7 +27,20 @@ function Win({ handleGameRestart, handleLevelChange, stats }) {
 
     localStorage.setItem(`results-${stats.selectedLevel.grid}`, JSON.stringify(topRes));
     setTopResults(topRes);
-  }, [stats]);
+
+    // Save score to Firebase
+    if (currentUser) {
+      const score = calculateAccuracy(stats.matchedCards, stats.moves);
+      saveScore(
+        currentUser.uid,
+        currentUser.displayName || 'Anonymous',
+        score,
+        stats.selectedLevel.grid,
+        stats.moves,
+        stats.misses
+      ).catch(error => console.error('Error saving score:', error));
+    }
+  }, [stats, currentUser]);
 
   return (
     <div className="win-container">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
-import { LogOut, Menu, X } from "lucide-react"
+import { LogOut, Menu, X, Trophy } from "lucide-react"
 import "./Header.css"
 
 export default function Header({ onLoginClick }) {
@@ -68,6 +68,12 @@ export default function Header({ onLoginClick }) {
         {/* Right: Logout/Login */}
         <div className="right-slot">
           <div className="desktop-actions">
+            {currentUser && (
+              <Link to="/leaderboard" className="leaderboard-link">
+                <Trophy className="leaderboard-icon" />
+                <span>Leaderboard</span>
+              </Link>
+            )}
             {currentUser ? (
               <button onClick={handleLogout} className="logout-button">
                 <LogOut className="logout-icon" />
@@ -113,9 +119,11 @@ export default function Header({ onLoginClick }) {
           )}
 
           <nav className="mobile-nav">
-            {/* <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link to="/matches" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Matches</Link>
-            <Link to="/profile" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Profile</Link> */}
+            <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link to="/leaderboard" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+              <Trophy className="mobile-nav-icon" />
+              <span>Leaderboard</span>
+            </Link>
           </nav>
         </div>
       </div>

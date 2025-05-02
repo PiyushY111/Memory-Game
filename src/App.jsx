@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './layout';
 import GameStats from './components/GameStats';
 import GameBoard from './components/GameBoard';
 import GameFooter from './components/GameFooter';
 import Levels from './components/Levels';
 import Win from './components/Win';
+import Leaderboard from './components/Leaderboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './Login';
 import { setUpCards } from './utils';
 import './App.css';
 
-function App() {
+function Game() {
   // ----------------------------- STATE -----------------------------
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [startedAt, setStartedAt] = useState(null);
@@ -180,6 +184,27 @@ function App() {
         <Levels handleLevelClick={l => setSelectedLevel(l)} />
       )}
     </Layout>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/leaderboard" element={
+        <ProtectedRoute>
+          <Layout>
+            <Leaderboard />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      <Route path="/" element={
+        <ProtectedRoute>
+          <Game />
+        </ProtectedRoute>
+      } />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
