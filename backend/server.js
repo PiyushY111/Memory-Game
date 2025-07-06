@@ -35,10 +35,16 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // CORS middleware
+const corsOrigins = process.env.NODE_ENV === 'production' 
+  ? process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['https://memory-game-theta-liard.vercel.app'] 
+  : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'];
+
+console.log('CORS Origins:', corsOrigins);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['https://your-frontend-domain.com'] 
-    : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'],
+  origin: corsOrigins,
   credentials: true
 }));
 
