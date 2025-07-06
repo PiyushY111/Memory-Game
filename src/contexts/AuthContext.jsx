@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, googleProvider } from '../firebase';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-} from 'firebase/auth';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -18,40 +11,58 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check if user is authenticated on app load
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = api.getToken();
+        if (token) {
+          const user = await api.getCurrentUser();
+          setCurrentUser(user);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        api.removeToken();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
   // Signup with email and password
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  async function signup(email, password) {
+    try {
+      const data = await api.register(email, password);
+      setCurrentUser(data.user);
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Login with email and password
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
-  }
-
-  // Login with Google
-  function loginWithGoogle() {
-    return signInWithPopup(auth, googleProvider);
+  async function login(email, password) {
+    try {
+      const data = await api.login(email, password);
+      setCurrentUser(data.user);
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Logout
   function logout() {
-    return signOut(auth);
+    api.logout();
+    setCurrentUser(null);
   }
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
 
   const value = {
     currentUser,
     login,
     signup,
-    loginWithGoogle,
     logout,
   };
 

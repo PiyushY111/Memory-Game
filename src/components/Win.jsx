@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { calculateAccuracy, calculateGameDuration } from '../utils';
 import { saveScore } from '../utils/scoreUtils';
 import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'react-toastify';
 import Button from './Button';
 import StatsCard from './StatsCard';
 
 function Win({ handleGameRestart, handleLevelChange, stats }) {
   const [topResults, setTopResults] = useState([]);
+  const [scoreSaved, setScoreSaved] = useState(false);
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -28,17 +30,25 @@ function Win({ handleGameRestart, handleLevelChange, stats }) {
     localStorage.setItem(`results-${stats.selectedLevel.grid}`, JSON.stringify(topRes));
     setTopResults(topRes);
 
-    // Save score to Firebase
+    // Save score to backend
     if (currentUser) {
       const score = calculateAccuracy(stats.matchedCards, stats.moves);
       saveScore(
-        currentUser.uid,
+        currentUser.id,
         currentUser.displayName || 'Anonymous',
         score,
         stats.selectedLevel.grid,
         stats.moves,
         stats.misses
-      ).catch(error => console.error('Error saving score:', error));
+      )
+        .then(() => {
+          setScoreSaved(true);
+          toast.success('Score saved to leaderboard! 🏆');
+        })
+        .catch(error => {
+          console.error('Error saving score:', error);
+          toast.error('Failed to save score to leaderboard');
+        });
     }
   }, [stats, currentUser]);
 
@@ -49,6 +59,11 @@ function Win({ handleGameRestart, handleLevelChange, stats }) {
         <div className="text-center">
           <img src="/graphics/trophy.svg" className="trophy-icon" width={60} height={60} alt="Trophy icon" />
           <div>You win!</div>
+          {scoreSaved && (
+            <div className="score-saved-badge">
+              🏆 Score saved to leaderboard!
+            </div>
+          )}
           <div className="d-flex gap-10 align-items-center justify-content-center">
             <StatsCard label="Moves" value={stats.moves} />
             <StatsCard label="Time" value={calculateGameDuration(stats.startedAt, stats.endedAt)} />

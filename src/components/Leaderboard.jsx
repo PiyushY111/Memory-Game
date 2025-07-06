@@ -1,67 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, orderBy, getDocs, where } from 'firebase/firestore';
-import { db } from '../firebase';
+import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import { RefreshCw } from 'lucide-react';
 import './Leaderboard.css';
 
 export default function Leaderboard() {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState('all');
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    const fetchScores = async () => {
-      try {
-        setLoading(true);
-        const scoresRef = collection(db, 'scores');
-        let q;
-        
-        if (selectedLevel === 'all') {
-          q = query(scoresRef, orderBy('score', 'desc'));
-        } else {
-          q = query(
-            scoresRef,
-            where('level', '==', selectedLevel),
-            orderBy('score', 'desc')
-          );
-        }
-        
-        const querySnapshot = await getDocs(q);
-        
-        // Create a Map to store unique scores by userId and level
-        const uniqueScores = new Map();
-        
-        querySnapshot.docs.forEach(doc => {
-          const scoreData = {
-            id: doc.id,
-            ...doc.data(),
-            timestamp: doc.data().timestamp?.toDate() || new Date()
-          };
-          
-          // Create a unique key combining userId and level
-          const key = `${scoreData.userId}_${scoreData.level}`;
-          
-          // Only keep the highest score for each user in each level
-          if (!uniqueScores.has(key) || uniqueScores.get(key).score < scoreData.score) {
-            uniqueScores.set(key, scoreData);
-          }
-        });
-        
-        // Convert Map to array and sort by score
-        const scoresList = Array.from(uniqueScores.values())
-          .sort((a, b) => b.score - a.score);
-        
-        setScores(scoresList);
-      } catch (error) {
-        console.error('Error fetching scores:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchScores = async () => {
+    try {
+      setLoading(true);
+      const scoresData = await api.getLeaderboard(selectedLevel, 50);
+      setScores(scoresData);
+    } catch (error) {
+      console.error('Error fetching scores:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
+  useEffect(() => {
     fetchScores();
   }, [selectedLevel]);
+
+  // Auto-refresh every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!loading) {
+        fetchScores();
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [loading, selectedLevel]);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchScores();
+  };
 
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
@@ -87,8 +68,21 @@ export default function Leaderboard() {
   return (
     <div className="leaderboard-container">
       <div className="leaderboard-header">
-        <h1 className="leaderboard-title">Leaderboard</h1>
-        <p className="leaderboard-subtitle">Track your progress and compete with others</p>
+        <div className="header-content">
+          <div>
+            <h1 className="leaderboard-title">Leaderboard</h1>
+            <p className="leaderboard-subtitle">Track your progress and compete with others</p>
+          </div>
+          <button 
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="refresh-button"
+            title="Refresh leaderboard"
+          >
+            <RefreshCw className={`refresh-icon ${refreshing ? 'spinning' : ''}`} />
+            {refreshing ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
       </div>
       
       <div className="level-filter">
@@ -144,7 +138,7 @@ export default function Leaderboard() {
               </tr>
             ) : (
               scores.map((score, index) => (
-                <tr key={score.id} className={currentUser?.uid === score.userId ? 'current-user' : ''}>
+                <tr key={score._id} className={currentUser?.id === score.userId?._id ? 'current-user' : ''}>
                   <td>
                     <div className="rank-container">
                       {index < 3 ? (
@@ -161,8 +155,8 @@ export default function Leaderboard() {
                   </td>
                   <td>
                     <div className="player-info">
-                      <span className="player-name">{score.username}</span>
-                      {currentUser?.uid === score.userId && (
+                      <span className="player-name">{score.displayName}</span>
+                      {currentUser?.id === score.userId?._id && (
                         <span className="current-player-badge">You</span>
                       )}
                     </div>
